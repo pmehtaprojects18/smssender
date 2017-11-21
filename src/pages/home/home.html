@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Schedule Event
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <ion-list>
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="scheduleDate" placeholder="Select Date"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Time</ion-label>
+      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="scheduleTime"  placeholder="Select Time"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>To:</ion-label>
+      <ion-input placeholder="Enter Phone Number" [(ngModel)]="contactNumber" ></ion-input>
+      <button ion-button icon-only item-end (click)="openContact()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label stacked>Message</ion-label>
+      <ion-textarea placeholder="Enter a message" [(ngModel)]="textMessage" ></ion-textarea>
+    </ion-item>  
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button large full color="secondary" [disabled]="textMessage.length>5">Save Event</button>
+  </ion-toolbar>
+</ion-footer>
