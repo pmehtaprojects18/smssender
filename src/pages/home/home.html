@@ -9,29 +9,36 @@
 <ion-content >
   <ion-list>
     <ion-item>
-      <ion-label>Date</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="scheduleDate" placeholder="Select Date"></ion-datetime>
+      <ion-label color="dark">Title :</ion-label>
+      <ion-input type="text" placeholder="Enter Event Title" [(ngModel)]="eventTitle" ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Time</ion-label>
+      <ion-label color="dark">Date :</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="scheduleDate" placeholder="Select Date"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="dark">All Day :</ion-label>
+      <ion-toggle checked="false" [(ngModel)]="isAllDayEvent"></ion-toggle>
+    </ion-item>
+    <ion-item *ngIf="!isAllDayEvent">
+      <ion-label color="dark">Time :</ion-label>
       <ion-datetime displayFormat="hh:mm A" [(ngModel)]="scheduleTime"  placeholder="Select Time"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label>To:</ion-label>
-      <ion-input placeholder="Enter Phone Number" [(ngModel)]="contactNumber" ></ion-input>
+      <ion-label color="dark">To :</ion-label>
+      <ion-input type="text" placeholder="Enter Phone Number" [(ngModel)]="contactNumber" ></ion-input>
       <button ion-button icon-only item-end (click)="openContact()">
         <ion-icon name="contact"></ion-icon>
       </button>
     </ion-item>
-  
     <ion-item>
-      <ion-label stacked>Message</ion-label>
+      <ion-label color="dark">Message :</ion-label>
       <ion-textarea placeholder="Enter a message" [(ngModel)]="textMessage" ></ion-textarea>
     </ion-item>  
   </ion-list>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <button ion-button large full color="secondary" [disabled]="textMessage.length>5">Save Event</button>
+    <button ion-button large full color="secondary" [disabled]="textMessage.length <= 5 && eventTitle.length <=5">Save Event</button>
   </ion-toolbar>
 </ion-footer>
