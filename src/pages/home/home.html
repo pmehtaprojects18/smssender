@@ -39,6 +39,6 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <button ion-button large full color="secondary" [disabled]="textMessage.length <= 5 && eventTitle.length <=5">Save Event</button>
+    <button ion-button large full color="secondary" [disabled]="textMessage.length <= 5 && eventTitle.length <=5" (click)="addToLocalNotification()">Save Event</button>
   </ion-toolbar>
 </ion-footer>

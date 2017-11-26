@@ -8,6 +8,9 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+import { IonicStorageModule } from '@ionic/storage';
+import { DataStorageService } from '../services/data.storage';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -15,6 +18,10 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
   ],
   imports: [
     BrowserModule,
+    IonicStorageModule.forRoot({
+      name: '__smssenderdb',
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -27,6 +34,7 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     SplashScreen,
     LocalNotifications,
     Contacts,
+    DataStorageService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

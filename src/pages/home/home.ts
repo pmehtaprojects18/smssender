@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+import { DataStorageService, IEventRecord } from '../../services/data.storage';
+
 import * as moment from 'moment';
 @Component({
   selector: 'page-home',
@@ -18,7 +20,8 @@ export class HomePage {
   public isAllDayEvent: boolean = false;
   
   constructor(private localNotifications: LocalNotifications,
-              private contacts: Contacts) {
+              private contacts: Contacts,
+              private ds: DataStorageService) {
     
     this.scheduleDate = moment().format();
     this.scheduleTime = moment().format();
@@ -36,15 +39,41 @@ export class HomePage {
       console.log(contact);
     });
   }
+  resetView = ()=>{
+    this.scheduleDate = moment().format();
+    this.scheduleTime = moment().format();
+    this.eventTitle = '';
+    this.contactNumber='';
+    this.isAllDayEvent=false;
+    this.textMessage='';
+  }
   addToLocalNotification = ()=>{
     this.eventId = moment().unix();
-    this.localNotifications.schedule({
+    let eventObj:IEventRecord = {
+      id: this.eventId,
+      title: this.eventTitle,
+      textMessage: this.textMessage,
+      eventDate: this.scheduleDate,
+      eventTime: this.scheduleTime,
+      phoneNumber: this.contactNumber,
+      isAllDay: this.isAllDayEvent,
+      isComplete: false
+    }
+    /*this.localNotifications.schedule({
       id: this.eventId,
       title: this.eventTitle,
       text: this.textMessage,
       at: new Date(2017,10,18,1,52),
       led: 'FF0000',
       sound: null
+    });*/
+    this.ds.saveEvent(eventObj).subscribe(resultSaved=>{
+      console.log("Record Saved");
+      this.resetView();
+      this.ds.getEvent(this.eventId.toString()).subscribe(resultEvent => {
+        console.log(resultEvent);
+      });
     });
+
   }
 }

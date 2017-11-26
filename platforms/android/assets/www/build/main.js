@@ -64,6 +64,7 @@ var HomePage = (function () {
         this.contacts = contacts;
         this.textMessage = '';
         this.eventTitle = '';
+        this.isAllDayEvent = false;
         this.openContact = function () {
             _this.contacts.pickContact().then(function (contact) {
                 if (contact.phoneNumbers.length > 0) {
@@ -77,7 +78,10 @@ var HomePage = (function () {
             });
         };
         this.addToLocalNotification = function () {
+            _this.eventId = __WEBPACK_IMPORTED_MODULE_3_moment__().unix();
             _this.localNotifications.schedule({
+                id: _this.eventId,
+                title: _this.eventTitle,
                 text: _this.textMessage,
                 at: new Date(2017, 10, 18, 1, 52),
                 led: 'FF0000',
@@ -89,7 +93,7 @@ var HomePage = (function () {
     }
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/pmehta/Documents/smssender/src/pages/home/home.html"*/`<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      Schedule Event\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content >\n  <ion-list>\n    <ion-item>\n      <ion-label>Date :</ion-label>\n      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="scheduleDate" placeholder="Select Date"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label>Time :</ion-label>\n      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="scheduleTime"  placeholder="Select Time"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label>To :</ion-label>\n      <ion-input placeholder="Enter Phone Number" [(ngModel)]="contactNumber" ></ion-input>\n      <button ion-button icon-only item-end (click)="openContact()">\n        <ion-icon name="contact"></ion-icon>\n      </button>\n    </ion-item>\n    <ion-item>\n      <ion-label>Title :</ion-label>\n      <ion-input placeholder="Enter Event Title" [(ngModel)]="eventTitle" ></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>Message :</ion-label>\n      <ion-textarea placeholder="Enter a message" [(ngModel)]="textMessage" ></ion-textarea>\n    </ion-item>  \n  </ion-list>\n</ion-content>\n<ion-footer>\n  <ion-toolbar>\n    <button ion-button large full color="secondary" [disabled]="textMessage.length <= 5 && eventTitle.length <=5">Save Event</button>\n  </ion-toolbar>\n</ion-footer>`/*ion-inline-end:"/Users/pmehta/Documents/smssender/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/pmehta/Documents/smssender/src/pages/home/home.html"*/`<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      Schedule Event\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content >\n  <ion-list>\n    <ion-item>\n      <ion-label color="dark">Title :</ion-label>\n      <ion-input type="text" placeholder="Enter Event Title" [(ngModel)]="eventTitle" ></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">Date :</ion-label>\n      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="scheduleDate" placeholder="Select Date"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">All Day :</ion-label>\n      <ion-toggle checked="false" [(ngModel)]="isAllDayEvent"></ion-toggle>\n    </ion-item>\n    <ion-item *ngIf="!isAllDayEvent">\n      <ion-label color="dark">Time :</ion-label>\n      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="scheduleTime"  placeholder="Select Time"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">To :</ion-label>\n      <ion-input type="text" placeholder="Enter Phone Number" [(ngModel)]="contactNumber" ></ion-input>\n      <button ion-button icon-only item-end (click)="openContact()">\n        <ion-icon name="contact"></ion-icon>\n      </button>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">Message :</ion-label>\n      <ion-textarea placeholder="Enter a message" [(ngModel)]="textMessage" ></ion-textarea>\n    </ion-item>  \n  </ion-list>\n</ion-content>\n<ion-footer>\n  <ion-toolbar>\n    <button ion-button large full color="secondary" [disabled]="textMessage.length <= 5 && eventTitle.length <=5">Save Event</button>\n  </ion-toolbar>\n</ion-footer>`/*ion-inline-end:"/Users/pmehta/Documents/smssender/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_local_notifications__["a" /* LocalNotifications */],
             __WEBPACK_IMPORTED_MODULE_2__ionic_native_contacts__["a" /* Contacts */]])
