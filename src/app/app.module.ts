@@ -10,11 +10,13 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import { IonicStorageModule } from '@ionic/storage';
 import { DataStorageService } from '../services/data.storage';
+import { EventListPage } from '../pages/event-list/event-list';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    EventListPage
   ],
   imports: [
     BrowserModule,
@@ -27,7 +29,8 @@ import { DataStorageService } from '../services/data.storage';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    EventListPage
   ],
   providers: [
     StatusBar,

@@ -30,6 +30,19 @@ export class DataStorageService{
         });
     }
 
+    getAllEvents = ():Observable<[IEventRecord]>=>{
+        return Observable.create(observer =>{
+            let records = [];
+            this.storage.forEach((value, key, iterationNumber)=>{
+            let obj = {EventId:key,EventData:JSON.parse(value)};
+                records.push(obj);
+            }).then((result)=>{
+                observer.next(records);
+            }).catch((err)=>{
+                observer.error(err);
+            });
+        });
+    }
     getEvent = (eventId:string):Observable<boolean>=>{
         return Observable.create(observer =>{
             this.storage.get(eventId).then((result)=>{

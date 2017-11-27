@@ -6,6 +6,7 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
 import { DataStorageService, IEventRecord } from '../../services/data.storage';
 
 import * as moment from 'moment';
+import { EventListPage } from '../event-list/event-list';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -21,6 +22,7 @@ export class HomePage {
   
   constructor(private localNotifications: LocalNotifications,
               private contacts: Contacts,
+              private nav:NavController,
               private ds: DataStorageService) {
     
     this.scheduleDate = moment().format();
@@ -75,5 +77,8 @@ export class HomePage {
       });
     });
 
+  }
+  openEventsList = ()=>{
+    this.nav.push(EventListPage);
   }
 }

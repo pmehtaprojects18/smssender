@@ -86,3 +86,8 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+
+//Display push button in Android and Windows
+$item-md-detail-push-show: true;
+$item-wp-detail-push-show: true;
