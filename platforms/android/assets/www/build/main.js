@@ -1,140 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 110:
-/***/ (function(module, exports) {
-
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncatched exception popping up in devtools
-	return Promise.resolve().then(function() {
-		throw new Error("Cannot find module '" + req + "'.");
-	});
-}
-webpackEmptyAsyncContext.keys = function() { return []; };
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 110;
-
-/***/ }),
-
-/***/ 152:
-/***/ (function(module, exports) {
-
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncatched exception popping up in devtools
-	return Promise.resolve().then(function() {
-		throw new Error("Cannot find module '" + req + "'.");
-	});
-}
-webpackEmptyAsyncContext.keys = function() { return []; };
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 152;
-
-/***/ }),
-
-/***/ 195:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_local_notifications__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_contacts__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_data_storage__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_moment__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var HomePage = (function () {
-    function HomePage(localNotifications, contacts, ds) {
-        var _this = this;
-        this.localNotifications = localNotifications;
-        this.contacts = contacts;
-        this.ds = ds;
-        this.textMessage = '';
-        this.eventTitle = '';
-        this.isAllDayEvent = false;
-        this.openContact = function () {
-            _this.contacts.pickContact().then(function (contact) {
-                if (contact.phoneNumbers.length > 0) {
-                    contact.phoneNumbers.forEach(function (element) {
-                        if (element.type === "mobile") {
-                            _this.contactNumber = element.value;
-                        }
-                    });
-                }
-                console.log(contact);
-            });
-        };
-        this.resetView = function () {
-            _this.scheduleDate = __WEBPACK_IMPORTED_MODULE_4_moment__().format();
-            _this.scheduleTime = __WEBPACK_IMPORTED_MODULE_4_moment__().format();
-            _this.eventTitle = '';
-            _this.contactNumber = '';
-            _this.isAllDayEvent = false;
-            _this.textMessage = '';
-        };
-        this.addToLocalNotification = function () {
-            _this.eventId = __WEBPACK_IMPORTED_MODULE_4_moment__().unix();
-            var eventObj = {
-                id: _this.eventId,
-                title: _this.eventTitle,
-                textMessage: _this.textMessage,
-                eventDate: _this.scheduleDate,
-                eventTime: _this.scheduleTime,
-                phoneNumber: _this.contactNumber,
-                isAllDay: _this.isAllDayEvent,
-                isComplete: false
-            };
-            /*this.localNotifications.schedule({
-              id: this.eventId,
-              title: this.eventTitle,
-              text: this.textMessage,
-              at: new Date(2017,10,18,1,52),
-              led: 'FF0000',
-              sound: null
-            });*/
-            _this.ds.saveEvent(eventObj).subscribe(function (resultSaved) {
-                console.log("Record Saved");
-                _this.resetView();
-                _this.ds.getEvent(_this.eventId.toString()).subscribe(function (resultEvent) {
-                    console.log(resultEvent);
-                });
-            });
-        };
-        this.scheduleDate = __WEBPACK_IMPORTED_MODULE_4_moment__().format();
-        this.scheduleTime = __WEBPACK_IMPORTED_MODULE_4_moment__().format();
-    }
-    HomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/pmehta/Documents/smssender/src/pages/home/home.html"*/`<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      Schedule Event\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content >\n  <ion-list>\n    <ion-item>\n      <ion-label color="dark">Title :</ion-label>\n      <ion-input type="text" placeholder="Enter Event Title" [(ngModel)]="eventTitle" ></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">Date :</ion-label>\n      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="scheduleDate" placeholder="Select Date"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">All Day :</ion-label>\n      <ion-toggle checked="false" [(ngModel)]="isAllDayEvent"></ion-toggle>\n    </ion-item>\n    <ion-item *ngIf="!isAllDayEvent">\n      <ion-label color="dark">Time :</ion-label>\n      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="scheduleTime"  placeholder="Select Time"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">To :</ion-label>\n      <ion-input type="text" placeholder="Enter Phone Number" [(ngModel)]="contactNumber" ></ion-input>\n      <button ion-button icon-only item-end (click)="openContact()">\n        <ion-icon name="contact"></ion-icon>\n      </button>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">Message :</ion-label>\n      <ion-textarea placeholder="Enter a message" [(ngModel)]="textMessage" ></ion-textarea>\n    </ion-item>  \n  </ion-list>\n</ion-content>\n<ion-footer>\n  <ion-toolbar>\n    <button ion-button large full color="secondary" [disabled]="textMessage.length <= 5 && eventTitle.length <=5" (click)="addToLocalNotification()">Save Event</button>\n  </ion-toolbar>\n</ion-footer>`/*ion-inline-end:"/Users/pmehta/Documents/smssender/src/pages/home/home.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_local_notifications__["a" /* LocalNotifications */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_contacts__["a" /* Contacts */],
-            __WEBPACK_IMPORTED_MODULE_3__services_data_storage__["a" /* DataStorageService */]])
-    ], HomePage);
-    return HomePage;
-}());
-
-//# sourceMappingURL=home.js.map
-
-/***/ }),
-
-/***/ 198:
+/***/ 102:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -170,6 +36,19 @@ var DataStorageService = (function () {
                 });
             });
         };
+        this.getAllEvents = function () {
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"].create(function (observer) {
+                var records = [];
+                _this.storage.forEach(function (value, key, iterationNumber) {
+                    var obj = { EventId: key, EventData: JSON.parse(value) };
+                    records.push(obj);
+                }).then(function (result) {
+                    observer.next(records);
+                }).catch(function (err) {
+                    observer.error(err);
+                });
+            });
+        };
         this.getEvent = function (eventId) {
             return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"].create(function (observer) {
                 _this.storage.get(eventId).then(function (result) {
@@ -191,13 +70,212 @@ var DataStorageService = (function () {
 
 /***/ }),
 
+/***/ 112:
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 112;
+
+/***/ }),
+
+/***/ 153:
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 153;
+
+/***/ }),
+
+/***/ 196:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_local_notifications__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_contacts__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_data_storage__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__event_list_event_list__ = __webpack_require__(318);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var HomePage = (function () {
+    function HomePage(localNotifications, contacts, nav, ds) {
+        var _this = this;
+        this.localNotifications = localNotifications;
+        this.contacts = contacts;
+        this.nav = nav;
+        this.ds = ds;
+        this.textMessage = '';
+        this.eventTitle = '';
+        this.isAllDayEvent = false;
+        this.openContact = function () {
+            _this.contacts.pickContact().then(function (contact) {
+                if (contact.phoneNumbers.length > 0) {
+                    contact.phoneNumbers.forEach(function (element) {
+                        if (element.type === "mobile") {
+                            _this.contactNumber = element.value;
+                        }
+                    });
+                }
+                console.log(contact);
+            });
+        };
+        this.resetView = function () {
+            _this.scheduleDate = __WEBPACK_IMPORTED_MODULE_5_moment__().format();
+            _this.scheduleTime = __WEBPACK_IMPORTED_MODULE_5_moment__().format();
+            _this.eventTitle = '';
+            _this.contactNumber = '';
+            _this.isAllDayEvent = false;
+            _this.textMessage = '';
+        };
+        this.addToLocalNotification = function () {
+            _this.eventId = __WEBPACK_IMPORTED_MODULE_5_moment__().unix();
+            var eventObj = {
+                id: _this.eventId,
+                title: _this.eventTitle,
+                textMessage: _this.textMessage,
+                eventDate: _this.scheduleDate,
+                eventTime: _this.scheduleTime,
+                phoneNumber: _this.contactNumber,
+                isAllDay: _this.isAllDayEvent,
+                isComplete: false
+            };
+            /*this.localNotifications.schedule({
+              id: this.eventId,
+              title: this.eventTitle,
+              text: this.textMessage,
+              at: new Date(2017,10,18,1,52),
+              led: 'FF0000',
+              sound: null
+            });*/
+            _this.ds.saveEvent(eventObj).subscribe(function (resultSaved) {
+                console.log("Record Saved");
+                _this.resetView();
+                _this.ds.getEvent(_this.eventId.toString()).subscribe(function (resultEvent) {
+                    console.log(resultEvent);
+                });
+            });
+        };
+        this.openEventsList = function () {
+            _this.nav.push(__WEBPACK_IMPORTED_MODULE_6__event_list_event_list__["a" /* EventListPage */]);
+        };
+        this.scheduleDate = __WEBPACK_IMPORTED_MODULE_5_moment__().format();
+        this.scheduleTime = __WEBPACK_IMPORTED_MODULE_5_moment__().format();
+    }
+    HomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-home',template:/*ion-inline-start:"/Users/pmehta/Documents/smssender/src/pages/home/home.html"*/`<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      Schedule Event\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="openEventsList()">\n        <ion-icon name="list-box"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content >\n  <ion-list>\n    <ion-item>\n      <ion-label color="dark">Title :</ion-label>\n      <ion-input type="text" placeholder="Enter Event Title" [(ngModel)]="eventTitle" ></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">Date :</ion-label>\n      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="scheduleDate" placeholder="Select Date"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">All Day :</ion-label>\n      <ion-toggle checked="false" [(ngModel)]="isAllDayEvent"></ion-toggle>\n    </ion-item>\n    <ion-item *ngIf="!isAllDayEvent">\n      <ion-label color="dark">Time :</ion-label>\n      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="scheduleTime"  placeholder="Select Time"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">To :</ion-label>\n      <ion-input type="text" placeholder="Enter Phone Number" [(ngModel)]="contactNumber" ></ion-input>\n      <button ion-button icon-only item-end (click)="openContact()">\n        <ion-icon name="contact"></ion-icon>\n      </button>\n    </ion-item>\n    <ion-item>\n      <ion-label color="dark">Message :</ion-label>\n      <ion-textarea placeholder="Enter a message" [(ngModel)]="textMessage" ></ion-textarea>\n    </ion-item>  \n  </ion-list>\n</ion-content>\n<ion-footer>\n  <ion-toolbar>\n    <button ion-button large full color="secondary" [disabled]="textMessage.length <= 5 && eventTitle.length <=5" (click)="addToLocalNotification()">Save Event</button>\n  </ion-toolbar>\n</ion-footer>`/*ion-inline-end:"/Users/pmehta/Documents/smssender/src/pages/home/home.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__ionic_native_local_notifications__["a" /* LocalNotifications */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_contacts__["a" /* Contacts */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4__services_data_storage__["a" /* DataStorageService */]])
+    ], HomePage);
+    return HomePage;
+}());
+
+//# sourceMappingURL=home.js.map
+
+/***/ }),
+
 /***/ 318:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventListPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_data_storage__ = __webpack_require__(102);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the EventListPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var EventListPage = (function () {
+    function EventListPage(navCtrl, navParams, ds) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.ds = ds;
+        this.items = [];
+    }
+    EventListPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad EventListPage');
+        this.ds.getAllEvents().subscribe(function (resultEvent) {
+            console.log(resultEvent);
+            _this.items = resultEvent;
+        });
+    };
+    EventListPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-event-list',template:/*ion-inline-start:"/Users/pmehta/Documents/smssender/src/pages/event-list/event-list.html"*/`<!--\n  Generated template for the EventListPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header color="primary">\n\n  <ion-navbar>\n    <ion-title>EventList</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemSelected(item.EventId)">\n      <h2>{{ item[\'EventData\'].title }}</h2>\n      <p>{{ item[\'EventData\'].phoneNumber }}</p>\n    </button>\n  </ion-list>\n</ion-content>\n`/*ion-inline-end:"/Users/pmehta/Documents/smssender/src/pages/event-list/event-list.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__services_data_storage__["a" /* DataStorageService */]])
+    ], EventListPage);
+    return EventListPage;
+}());
+
+//# sourceMappingURL=event-list.js.map
+
+/***/ }),
+
+/***/ 319:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(319);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(343);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -205,28 +283,30 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 342:
+/***/ 343:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(393);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_local_notifications__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_contacts__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_local_notifications__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_contacts__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_data_storage__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_data_storage__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_event_list_event_list__ = __webpack_require__(318);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -245,7 +325,8 @@ var AppModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_6__pages_home_home__["a" /* HomePage */]
+                __WEBPACK_IMPORTED_MODULE_6__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_event_list_event_list__["a" /* EventListPage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -260,7 +341,8 @@ var AppModule = (function () {
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_6__pages_home_home__["a" /* HomePage */]
+                __WEBPACK_IMPORTED_MODULE_6__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_event_list_event_list__["a" /* EventListPage */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
@@ -279,16 +361,16 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 393:
+/***/ 394:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(196);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -316,7 +398,7 @@ var MyApp = (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/pmehta/Documents/smssender/src/app/app.html"*/`<ion-nav [root]="rootPage"></ion-nav>\n`/*ion-inline-end:"/Users/pmehta/Documents/smssender/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());
@@ -325,7 +407,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 398:
+/***/ 399:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -580,9 +662,9 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 398;
+webpackContext.id = 399;
 
 /***/ })
 
-},[318]);
+},[319]);
 //# sourceMappingURL=main.js.map
